@@ -1,7 +1,6 @@
 import React,{ createContext, useContext, useEffect,useState } from 'react';
 import useAuth from '../utils/useAuth';
 import { getCart } from '../api/cart';
-import { CartType } from '../types/cartTypes';
 
 
 
@@ -9,7 +8,7 @@ const cartContext = createContext<any>(undefined)
 
 const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [cart, setCart] = useState<CartType>();
+    const [cart, setCart] = useState<{ _id: number; items: any[] } | null>(null);
     const { authInfo } = useAuth();
 
     useEffect(() => {
