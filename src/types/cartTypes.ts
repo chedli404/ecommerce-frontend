@@ -1,8 +1,8 @@
 export interface CartType {
-    _id: number,
+    _id: string,
     userId: string,
     price: number,
-    items: [CartItemType]
+    items: []
     totalPrice: number
 }
 
