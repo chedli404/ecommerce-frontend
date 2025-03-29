@@ -5,8 +5,22 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 // Get user's cart
 export const getCart = async (userId: string): Promise<CartType> => {
-  const response = await axios.get(`${apiUrl}/cart/${userId}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${apiUrl}/cart/${userId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      // Return empty cart structure
+      return {
+        _id: '',
+        userId,
+        price: 0, // Add default price value
+        items: [],
+        totalPrice: 0
+      };
+    }
+    throw error;
+  }
 };
 
 // Add product to cart
