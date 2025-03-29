@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import useAuth from '../utils/useAuth';
 import { Link } from 'react-router';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 const Login = () => {
 
@@ -9,7 +11,7 @@ const Login = () => {
     const [error, setError] = useState<any>(null);
     const [isLogin, setIsLogin] = useState<boolean>(false);
 
-    const { login } = useAuth();
+    const { login, googleLogin } = useAuth();
 
     const handleLogin = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
@@ -36,6 +38,21 @@ const Login = () => {
                     {isLogin && <p className='success'>Login successful</p>}
                     {isLogin && (window.location.href = '/')}
                 </form>
+                <GoogleLogin
+                    onSuccess={async (credentialResponse) => {
+                        try {
+                            await googleLogin(credentialResponse.credential!);
+                            setError(null);
+                            setIsLogin(true);
+                        } catch (err) {
+                            setError(err instanceof Error ? err.message : 'Google login failed');
+                        }
+                    }}
+                    onError={() => {
+                        setError('Google login failed');
+                    }}
+                />
+
                 <p>Don't have an account? <Link to="/signup">Signup now</Link></p>
             </div>
 
