@@ -45,3 +45,4 @@ export async function getProductsBySearch(search: string) {
     const response = await axios.get(`${apiUrl}/products/search/${search}`);
     return response.data;
 }
+
