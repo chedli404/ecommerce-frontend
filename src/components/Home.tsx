@@ -4,13 +4,14 @@ import { getProducts } from "../api/product";
 import { ProductType } from "../types/productTypes";
 import { useCartContext } from "../context/cartContext";
 import { addToCart } from '../api/cart'
+import { Link } from "react-router";
 
 
 const HeroSection = () => {
   const [category, setCategory] = useState<Category>(Category.ALL);
-  const [product, setProduct] = useState<ProductType[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
   const [hoveredProductId, setHoveredProductId] = useState<string | null>(null);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [lastSectionProducts, setLastSectionProducts] = useState<ProductType[]>([]);
   const [cart, setCart] = useCartContext()
 
@@ -18,7 +19,7 @@ const HeroSection = () => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
-        setProduct(data);
+        setProducts(data);
         setFilteredProducts(data);
         setLastSectionProducts(data);
       
@@ -31,12 +32,10 @@ const HeroSection = () => {
 
   
   useEffect(() => {
-    if (category === Category.ALL) {
-      setFilteredProducts(product);
-    } else {
-      setFilteredProducts(product.filter((product) => product.category === category));
-    }
-  }, [category, product]);
+    category === Category.ALL
+      ? setFilteredProducts(products)
+      : setFilteredProducts(products.filter(product => product.category === category));
+  }, [category, products]);
   
   const handleAddToCart = async (productId: string) => {
     if (!productId) return;
@@ -54,37 +53,37 @@ const HeroSection = () => {
             Shop now for the best deals!"
           </p>
           
-          <a href="/products "  className="hero1-button">
+          <Link to="/products "  className="hero1-button">
             Shop Now
-          </a>
+          </Link>
         </div>
         <div className="hero2">
           <h1>Men's fashion</h1>
           <p>358 items</p>
-          <a href="/products" className="hero2-button">
+          <Link to="/products "  className="hero2-button">
             Shop Now
-          </a>
+          </Link>
         </div>
         <div className="hero3">
           <h1>Women's fashion</h1>
           <p>657 items</p>
-          <a href="/products" className="hero3-button">
+          <Link to="/products "  className="hero3-button">
             Shop Now
-          </a>
+          </Link>
         </div>
         <div className="hero4">
           <h1>Accessories</h1>
           <p>428 items</p>
-          <a href="/products" className="hero4-button">
+          <Link to="/products "  className="hero4-button">
             Shop Now
-          </a>
+          </Link>
         </div>
         <div className="hero5">
           <h1>Sportswear</h1>
           <p>208 items</p>
-          <a href="/products" className="hero5-button">
+          <Link to="/products "  className="hero5-button">
             Shop Now
-          </a>
+          </Link>
         </div>
       </div>
       <div className="hero-text">
@@ -159,9 +158,9 @@ const HeroSection = () => {
                   <h3>The Chole Collection</h3>
                   <h1>The Project Jacket</h1>
                   <p className="caption">Elevate your style with our signature jacket design</p>
-                  <a href="/products" className="hero6-button">
-                    Shop Now
-                  </a>
+                  <Link to="/products "  className="hero6-button">
+            Shop Now
+          </Link>
                 </div>
               </div>
               <div className="carousel-item">
@@ -169,9 +168,9 @@ const HeroSection = () => {
                   <h3>The Chole Collection</h3>
                   <h1>The Project Jacket</h1>
                   <p className="caption">Timeless elegance meets modern comfort</p>
-                  <a href="/products" className="hero6-button">
-                    Shop Now
-                  </a>
+                  <Link to="/products "  className="hero6-button">
+            Shop Now
+          </Link>
                 </div>
               </div>
               <div className="carousel-item">
@@ -179,9 +178,9 @@ const HeroSection = () => {
                   <h3>The Chole Collection</h3>
                   <h1>The Project Jacket</h1>
                   <p className="caption">Premium quality for the discerning customer</p>
-                  <a href="/products" className="hero6-button">
-                    Shop Now
-                  </a>
+                  <Link to="/products "  className="hero6-button">
+            Shop Now
+          </Link>
                 </div>
               </div>
             </div>
